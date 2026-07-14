@@ -9,13 +9,13 @@ export default function GuidePage() {
       />
 
       <section className="mb-10">
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">
           Surya Namaskar — key form cues
         </h2>
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/10 dark:bg-white/5">
+        <div className="overflow-hidden rounded-xl border border-theme bg-surface">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200 bg-gray-50 text-left text-xs uppercase text-gray-500 dark:border-white/10 dark:bg-white/10 dark:text-gray-400">
+              <tr className="border-b border-theme bg-surface-elevated text-left text-xs uppercase text-muted">
                 <th className="px-4 py-3">Step</th>
                 <th className="px-4 py-3">Position</th>
                 <th className="px-4 py-3">Breath</th>
@@ -37,11 +37,11 @@ export default function GuidePage() {
                 ["11", "Arms up, slight backbend", "Inhale", "Same as step 2"],
                 ["12", "Back to start, palms together", "Exhale", "Not pausing to breathe"],
               ].map(([step, position, breath, mistake]) => (
-                <tr key={step} className="border-b border-gray-100 last:border-0 dark:border-white/5">
-                  <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{step}</td>
-                  <td className="px-4 py-3 text-gray-900 dark:text-gray-100">{position}</td>
-                  <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{breath}</td>
-                  <td className="hidden px-4 py-3 text-gray-500 dark:text-gray-400 sm:table-cell">{mistake}</td>
+                <tr key={step} className="border-b border-theme last:border-0">
+                  <td className="px-4 py-3 font-medium text-[var(--foreground)]">{step}</td>
+                  <td className="px-4 py-3 text-[var(--foreground)]">{position}</td>
+                  <td className="px-4 py-3 text-muted opacity-90">{breath}</td>
+                  <td className="hidden px-4 py-3 text-muted sm:table-cell">{mistake}</td>
                 </tr>
               ))}
             </tbody>
@@ -50,10 +50,10 @@ export default function GuidePage() {
       </section>
 
       <section className="mb-10">
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">
           Pranayama — timing and technique
         </h2>
-        <div className="space-y-0 rounded-xl border border-gray-200 bg-white divide-y divide-gray-100 dark:border-white/10 dark:bg-white/5 dark:divide-white/5">
+        <div className="space-y-0 rounded-xl border border-theme bg-surface divide-y divide-[var(--border)]">
           {[
             {
               name: "Ujjayi — ocean breath",
@@ -88,10 +88,10 @@ export default function GuidePage() {
           ].map((item) => (
             <div key={item.name} className="flex gap-4 p-5">
               <div className="min-w-0 flex-1">
-                <h3 className="font-medium text-gray-900 dark:text-gray-100">{item.name}</h3>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{item.detail}</p>
+                <h3 className="font-medium text-[var(--foreground)]">{item.name}</h3>
+                <p className="mt-1 text-sm text-muted">{item.detail}</p>
               </div>
-              <span className="shrink-0 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+              <span className="shrink-0 text-sm font-medium text-[var(--accent)]">
                 {item.time}
               </span>
             </div>
@@ -100,13 +100,13 @@ export default function GuidePage() {
       </section>
 
       <section>
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">
           Non-negotiable rules
         </h2>
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/10 dark:bg-white/5">
+        <div className="overflow-hidden rounded-xl border border-theme bg-surface">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200 bg-gray-50 text-left text-xs uppercase text-gray-500 dark:border-white/10 dark:bg-white/10 dark:text-gray-400">
+              <tr className="border-b border-theme bg-surface-elevated text-left text-xs uppercase text-muted">
                 <th className="px-4 py-3">Rule</th>
                 <th className="px-4 py-3">Why it matters</th>
               </tr>
@@ -120,9 +120,9 @@ export default function GuidePage() {
                 ["20 min daily beats 1 hr occasionally", "Consistency is the only thing that works"],
                 ["Morning 6–7am is ideal", "Cortisol is naturally high — body is primed for movement"],
               ].map(([rule, why]) => (
-                <tr key={rule} className="border-b border-gray-100 last:border-0 dark:border-white/5">
-                  <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{rule}</td>
-                  <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{why}</td>
+                <tr key={rule} className="border-b border-theme last:border-0">
+                  <td className="px-4 py-3 font-medium text-[var(--foreground)]">{rule}</td>
+                  <td className="px-4 py-3 text-muted">{why}</td>
                 </tr>
               ))}
             </tbody>
