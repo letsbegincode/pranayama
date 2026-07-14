@@ -1,0 +1,309 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .container { padding: 1rem 0; }
+  .phase-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+  .phase-badge { font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: var(--border-radius-md); }
+  .phase-title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .phase-sub { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+  .section-label { font-size: 12px; font-weight: 500; letter-spacing: 0.05em; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: 8px; margin-top: 1.25rem; }
+  .table-wrap { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--color-background-secondary); color: var(--color-text-secondary); font-weight: 500; font-size: 12px; padding: 8px 12px; text-align: left; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  td { padding: 9px 12px; color: var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--color-background-secondary); }
+  .tag { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 99px; margin-right: 4px; }
+  .tag-teal { background: #E1F5EE; color: #0F6E56; }
+  .tag-blue { background: #E6F1FB; color: #185FA5; }
+  .tag-amber { background: #FAEEDA; color: #854F0B; }
+  .tag-purple { background: #EEEDFE; color: #534AB7; }
+  .tag-coral { background: #FAECE7; color: #993C1D; }
+  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 1.75rem 0; }
+  .phase-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; background: var(--color-background-primary); }
+  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 8px; }
+  .day-cell { border-radius: 6px; padding: 4px 2px; text-align: center; font-size: 10px; font-weight: 500; }
+  .day-on { background: #E1F5EE; color: #0F6E56; }
+  .day-rest { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+  .day-label { font-size: 9px; color: var(--color-text-secondary); text-align: center; margin-bottom: 2px; }
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+  .stat-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; }
+  .stat-val { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .stat-lbl { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .note { font-size: 12px; color: var(--color-text-secondary); margin-top: 6px; padding: 8px 10px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); border-left: 2px solid #1D9E75; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .tab { font-size: 13px; font-weight: 500; padding: 6px 16px; border-radius: 99px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); cursor: pointer; }
+  .tab.active { background: #1D9E75; color: #fff; border-color: #1D9E75; }
+  .phase-section { display: none; }
+  .phase-section.visible { display: block; }
+  .breath-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .breath-row:last-child { border-bottom: none; }
+  .breath-icon { font-size: 18px; margin-top: 1px; }
+  .breath-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .breath-detail { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+  .progress-bar { height: 4px; background: var(--color-background-secondary); border-radius: 99px; margin-top: 6px; }
+  .progress-fill { height: 4px; border-radius: 99px; background: #1D9E75; }
+</style>
+
+<div class="container">
+  <h2 class="sr-only">3-month yoga and running fitness plan</h2>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showPhase('p1')">Month 1</button>
+    <button class="tab" onclick="showPhase('p2')">Month 2</button>
+    <button class="tab" onclick="showPhase('p3')">Month 3</button>
+    <button class="tab" onclick="showPhase('yoga')">Full yoga guide</button>
+  </div>
+
+  <!-- MONTH 1 -->
+  <div id="p1" class="phase-section visible">
+    <div class="phase-header">
+      <div>
+        <div class="phase-title">Month 1 — Build the base</div>
+        <div class="phase-sub">Form over speed. Consistency over intensity.</div>
+      </div>
+    </div>
+
+    <div class="section-label">Morning yoga — daily (35 min)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phase</th><th>Practice</th><th>Duration</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-amber">warm up</span></td><td>Joint loosening — neck, shoulders, wrists, ankles</td><td>3 min</td><td>Every joint moved</td></tr>
+          <tr><td><span class="tag tag-teal">movement</span></td><td>Surya Namaskar</td><td>10 min</td><td>4 rounds, slow with breath sync</td></tr>
+          <tr><td><span class="tag tag-blue">strength</span></td><td>Plank hold</td><td>3 min</td><td>3 sets × 20 sec hold</td></tr>
+          <tr><td><span class="tag tag-blue">strength</span></td><td>Push ups</td><td>4 min</td><td>3 sets × 5 reps, slow</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Ujjayi (ocean breath)</td><td>3 min</td><td>4 count inhale, 6 count exhale</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Anulom Vilom</td><td>5 min</td><td>4-4 count, continuous</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Bhramari</td><td>3 min</td><td>8 rounds, humming exhale</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Udgeet (OM chanting)</td><td>2 min</td><td>6 rounds, long exhale</td></tr>
+          <tr><td><span class="tag tag-coral">rest</span></td><td>Shavasana — do not skip</td><td>3 min</td><td>Flat, eyes closed, no phone</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Never do pranayama before Surya Namaskar. Body must be warm first.</div>
+
+    <div class="section-label">Evening run — 5 days/week</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Week</th><th>Distance</th><th>Target pace</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>Week 1</td><td>2.5 km</td><td>5:44 – 6:00 /km</td><td>Match today's pace, add 500m</td></tr>
+          <tr><td>Week 2</td><td>3 km</td><td>5:44 /km</td><td>Same pace, longer distance</td></tr>
+          <tr><td>Week 3</td><td>3.5 km</td><td>5:30 – 5:44 /km</td><td>Start pushing slightly</td></tr>
+          <tr><td>Week 4</td><td>4 km</td><td>5:30 /km</td><td>First 4 km run</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-label">Weekly schedule</div>
+    <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center;">
+      <div><div class="day-label">Mon</div><div class="day-cell day-on">Yoga + Run</div></div>
+      <div><div class="day-label">Tue</div><div class="day-cell day-on">Yoga + Run</div></div>
+      <div><div class="day-label">Wed</div><div class="day-cell day-on">Yoga + Run</div></div>
+      <div><div class="day-label">Thu</div><div class="day-cell day-rest">Yoga only</div></div>
+      <div><div class="day-label">Fri</div><div class="day-cell day-on">Yoga + Run</div></div>
+      <div><div class="day-label">Sat</div><div class="day-cell day-on">Yoga + Long run</div></div>
+      <div><div class="day-label">Sun</div><div class="day-cell day-rest">Full rest</div></div>
+    </div>
+
+    <div class="stat-row" style="margin-top:1rem;">
+      <div class="stat-box"><div class="stat-val">4 rounds</div><div class="stat-lbl">Surya Namaskar</div></div>
+      <div class="stat-box"><div class="stat-val">4 km</div><div class="stat-lbl">End of month run</div></div>
+      <div class="stat-box"><div class="stat-val">5 reps</div><div class="stat-lbl">Push ups per set</div></div>
+    </div>
+  </div>
+
+  <!-- MONTH 2 -->
+  <div id="p2" class="phase-section">
+    <div class="phase-header">
+      <div>
+        <div class="phase-title">Month 2 — Build endurance</div>
+        <div class="phase-sub">Longer runs. Stronger holds. Deeper breathing.</div>
+      </div>
+    </div>
+
+    <div class="section-label">Morning yoga — daily (40 min)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phase</th><th>Practice</th><th>Duration</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-amber">warm up</span></td><td>Joint loosening</td><td>3 min</td><td>Same as month 1</td></tr>
+          <tr><td><span class="tag tag-teal">movement</span></td><td>Surya Namaskar</td><td>12 min</td><td>6 rounds, breath fully synced</td></tr>
+          <tr><td><span class="tag tag-blue">strength</span></td><td>Plank hold</td><td>4 min</td><td>3 sets × 30 sec hold</td></tr>
+          <tr><td><span class="tag tag-blue">strength</span></td><td>Push ups</td><td>4 min</td><td>3 sets × 8–10 reps</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Ujjayi</td><td>3 min</td><td>4 count in, 8 count out</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Anulom Vilom</td><td>5 min</td><td>4 in, hold 2, 8 out</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Bhramari</td><td>3 min</td><td>10 rounds</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Udgeet</td><td>2 min</td><td>8 rounds</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Kapalbhati — add now</td><td>3 min</td><td>Start slow, 60 breaths/min</td></tr>
+          <tr><td><span class="tag tag-coral">rest</span></td><td>Shavasana</td><td>3 min</td><td>Do not skip</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Add Kapalbhati only in month 2 — once DNS breathing has improved from Anulom Vilom practice.</div>
+
+    <div class="section-label">Evening run — 5 days/week</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Week</th><th>Distance</th><th>Target pace</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>Week 5</td><td>4.5 km</td><td>5:20 – 5:30 /km</td><td>Maintain pace, push distance</td></tr>
+          <tr><td>Week 6</td><td>5 km</td><td>5:20 /km</td><td>First 5 km run — milestone</td></tr>
+          <tr><td>Week 7</td><td>5.5 km</td><td>5:10 – 5:20 /km</td><td>Slightly faster</td></tr>
+          <tr><td>Week 8</td><td>6 km</td><td>5:10 /km</td><td>Building towards 10k base</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="stat-row" style="margin-top:1rem;">
+      <div class="stat-box"><div class="stat-val">6 rounds</div><div class="stat-lbl">Surya Namaskar</div></div>
+      <div class="stat-box"><div class="stat-val">6 km</div><div class="stat-lbl">End of month run</div></div>
+      <div class="stat-box"><div class="stat-val">10 reps</div><div class="stat-lbl">Push ups per set</div></div>
+    </div>
+  </div>
+
+  <!-- MONTH 3 -->
+  <div id="p3" class="phase-section">
+    <div class="phase-header">
+      <div>
+        <div class="phase-title">Month 3 — Unlock performance</div>
+        <div class="phase-sub">Speed up. Go longer. Feel the shift.</div>
+      </div>
+    </div>
+
+    <div class="section-label">Morning yoga — daily (45 min)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phase</th><th>Practice</th><th>Duration</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-amber">warm up</span></td><td>Joint loosening</td><td>3 min</td><td>Full body, dynamic</td></tr>
+          <tr><td><span class="tag tag-teal">movement</span></td><td>Surya Namaskar</td><td>15 min</td><td>10 rounds at good pace</td></tr>
+          <tr><td><span class="tag tag-blue">strength</span></td><td>Plank hold</td><td>4 min</td><td>3 sets × 45 sec hold</td></tr>
+          <tr><td><span class="tag tag-blue">strength</span></td><td>Push ups</td><td>5 min</td><td>3 sets × 15–20 reps</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Ujjayi</td><td>3 min</td><td>Full breath control</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Anulom Vilom</td><td>5 min</td><td>4 in, hold 4, 8 out — advanced ratio</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Bhramari</td><td>3 min</td><td>12 rounds, deep vibration</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Udgeet</td><td>2 min</td><td>Extended OM, long exhale</td></tr>
+          <tr><td><span class="tag tag-purple">breath</span></td><td>Kapalbhati</td><td>5 min</td><td>Build to 90–100 breaths/min</td></tr>
+          <tr><td><span class="tag tag-coral">rest</span></td><td>Shavasana</td><td>5 min</td><td>Longer rest for deeper recovery</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-label">Evening run — 5 days/week</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Week</th><th>Distance</th><th>Target pace</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>Week 9</td><td>6.5 km</td><td>5:00 – 5:10 /km</td><td>Sub-5 min/km attempts</td></tr>
+          <tr><td>Week 10</td><td>7 km</td><td>5:00 /km</td><td>Steady at 5 min/km</td></tr>
+          <tr><td>Week 11</td><td>8 km</td><td>4:50 – 5:00 /km</td><td>Push your limit</td></tr>
+          <tr><td>Week 12</td><td>8–10 km</td><td>under 5:00 /km</td><td>End goal — athletic youth level</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="stat-row" style="margin-top:1rem;">
+      <div class="stat-box"><div class="stat-val">10 rounds</div><div class="stat-lbl">Surya Namaskar</div></div>
+      <div class="stat-box"><div class="stat-val">10 km</div><div class="stat-lbl">End of month run</div></div>
+      <div class="stat-box"><div class="stat-val">20 reps</div><div class="stat-lbl">Push ups per set</div></div>
+    </div>
+  </div>
+
+  <!-- YOGA DEEP GUIDE -->
+  <div id="yoga" class="phase-section">
+    <div class="phase-header">
+      <div>
+        <div class="phase-title">Full yoga — how to do each correctly</div>
+        <div class="phase-sub">No guru needed. Follow these cues.</div>
+      </div>
+    </div>
+
+    <div class="section-label">Surya Namaskar — key form cues</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Position</th><th>Breath</th><th>Common mistake</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Stand tall, palms together at chest</td><td>Neutral</td><td>Slouching shoulders</td></tr>
+          <tr><td>2</td><td>Arms up, slight backbend</td><td>Inhale</td><td>Compressing lower back</td></tr>
+          <tr><td>3</td><td>Forward fold, hands to floor</td><td>Exhale</td><td>Forcing straight legs — bend knees if needed</td></tr>
+          <tr><td>4</td><td>Right leg step back, low lunge</td><td>Inhale</td><td>Knee past ankle</td></tr>
+          <tr><td>5</td><td>Plank position</td><td>Hold briefly</td><td>Hips too high or sagging</td></tr>
+          <tr><td>6</td><td>Lower chest to floor</td><td>Exhale</td><td>Dropping hips first</td></tr>
+          <tr><td>7</td><td>Cobra — chest up, elbows soft</td><td>Inhale</td><td>Straightening arms fully</td></tr>
+          <tr><td>8</td><td>Downward dog — hips high</td><td>Exhale</td><td>Rounding the back</td></tr>
+          <tr><td>9</td><td>Left leg forward, low lunge</td><td>Inhale</td><td>Rushing this step</td></tr>
+          <tr><td>10</td><td>Forward fold again</td><td>Exhale</td><td>Jerking up fast</td></tr>
+          <tr><td>11</td><td>Arms up, slight backbend</td><td>Inhale</td><td>Same as step 2</td></tr>
+          <tr><td>12</td><td>Back to start, palms together</td><td>Exhale</td><td>Not pausing to breathe</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-label">Pranayama — timing and technique</div>
+    <div style="border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem;">
+      <div class="breath-row">
+        <div style="flex:1">
+          <div class="breath-name">Ujjayi — ocean breath</div>
+          <div class="breath-detail">Inhale nose → constrict throat slightly → exhale nose with soft hissing sound. 4 count in, 6 count out. Do first — calms the nervous system before deeper work.</div>
+        </div>
+        <div style="font-size:12px; color:#0F6E56; font-weight:500; white-space:nowrap;">3 min</div>
+      </div>
+      <div class="breath-row">
+        <div style="flex:1">
+          <div class="breath-name">Anulom Vilom — alternate nostril</div>
+          <div class="breath-detail">Right thumb closes right → inhale left 4 counts. Close both, hold 2. Ring finger closes left → exhale right 4 counts. Reverse. Most important for DNS. Never force the blocked side.</div>
+        </div>
+        <div style="font-size:12px; color:#0F6E56; font-weight:500; white-space:nowrap;">5 min</div>
+      </div>
+      <div class="breath-row">
+        <div style="flex:1">
+          <div class="breath-name">Bhramari — humming bee</div>
+          <div class="breath-detail">Thumbs on ears, fingers over eyes gently. Inhale fully. Exhale with mmmmm humming — feel vibration in skull. Directly reduces anxiety and mental heaviness. 8–10 rounds.</div>
+        </div>
+        <div style="font-size:12px; color:#0F6E56; font-weight:500; white-space:nowrap;">3 min</div>
+      </div>
+      <div class="breath-row">
+        <div style="flex:1">
+          <div class="breath-name">Udgeet — OM chanting</div>
+          <div class="breath-detail">Inhale deeply. Exhale with OOOOmmmm — O for 3 sec, M for 3 sec. Long slow exhale. Eyes closed. Very meditative. 6–8 rounds. Best done last before Shavasana.</div>
+        </div>
+        <div style="font-size:12px; color:#0F6E56; font-weight:500; white-space:nowrap;">2 min</div>
+      </div>
+      <div class="breath-row">
+        <div style="flex:1">
+          <div class="breath-name">Kapalbhati — add in month 2 only</div>
+          <div class="breath-detail">Passive inhale, sharp forceful exhale through nose. Start 60/min, build to 90–100/min by month 3. Skip if DNS feels irritated. Never do on a full stomach.</div>
+        </div>
+        <div style="font-size:12px; color:#854F0B; font-weight:500; white-space:nowrap;">Month 2+</div>
+      </div>
+    </div>
+
+    <div class="section-label">Non-negotiable rules</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Rule</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td>Empty stomach — always</td><td>Minimum 3 hrs after a meal. Pranayama on a full stomach causes nausea.</td></tr>
+          <tr><td>Spine straight during pranayama</td><td>Slouched back restricts lung capacity by 30%</td></tr>
+          <tr><td>Never skip Shavasana</td><td>This is when the nervous system actually absorbs the session</td></tr>
+          <tr><td>Breath leads movement in Surya Namaskar</td><td>If you're moving faster than your breath, slow down</td></tr>
+          <tr><td>20 min daily beats 1 hr occasionally</td><td>Consistency is the only thing that works</td></tr>
+          <tr><td>Morning 6–7am is ideal</td><td>Cortisol is naturally high — body is primed for movement</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showPhase(id) {
+  document.querySelectorAll('.phase-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('visible');
+  event.target.classList.add('active');
+}
+</script>
