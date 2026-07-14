@@ -13,7 +13,7 @@ interface TimerSessionProps {
 
 function playBeatSound() {
   try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     const ctx = new AudioContextClass();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -30,7 +30,7 @@ function playBeatSound() {
 
 function playTransitionSound() {
   try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     const ctx = new AudioContextClass();
     const playBowl = (freq: number, delay: number, duration: number) => {
       const osc = ctx.createOscillator();
@@ -52,7 +52,7 @@ function playTransitionSound() {
 
 function playStartSound() {
   try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     const ctx = new AudioContextClass();
     const playNote = (freq: number, delay: number, duration: number) => {
       const osc = ctx.createOscillator();
@@ -75,7 +75,7 @@ function playStartSound() {
 
 function playEndSound() {
   try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     const ctx = new AudioContextClass();
     const playDeep = (freq: number, delay: number, duration: number) => {
       const osc = ctx.createOscillator();
@@ -97,7 +97,7 @@ function playEndSound() {
 
 function playPauseSound() {
   try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     const ctx = new AudioContextClass();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
