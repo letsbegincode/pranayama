@@ -11,21 +11,106 @@ interface TimerSessionProps {
   title?: string;
 }
 
-function playSectionChime() {
+function playBeatSound() {
   try {
-    const ctx = new AudioContext();
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const ctx = new AudioContextClass();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
     gain.connect(ctx.destination);
-    osc.frequency.value = 528;
-    gain.gain.setValueAtTime(0.08, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(250, ctx.currentTime);
+    gain.gain.setValueAtTime(0.8, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
     osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.4);
-  } catch {
-    // Audio not available — skip silently
-  }
+    osc.stop(ctx.currentTime + 0.3);
+  } catch {}
+}
+
+function playTransitionSound() {
+  try {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const ctx = new AudioContextClass();
+    const playBowl = (freq: number, delay: number, duration: number) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+      gain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + delay + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + duration);
+    };
+    playBowl(432, 0, 2.0); // 432Hz healing frequency
+    playBowl(648, 0, 2.0); // Perfect fifth harmony
+  } catch {}
+}
+
+function playStartSound() {
+  try {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const ctx = new AudioContextClass();
+    const playNote = (freq: number, delay: number, duration: number) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+      gain.gain.linearRampToValueAtTime(0.4, ctx.currentTime + delay + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + duration);
+    };
+    playNote(528, 0, 1.5);
+    playNote(659.25, 0.2, 1.5);
+    playNote(792, 0.4, 2.0);
+  } catch {}
+}
+
+function playEndSound() {
+  try {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const ctx = new AudioContextClass();
+    const playDeep = (freq: number, delay: number, duration: number) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+      gain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + delay + 0.5);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + duration);
+    };
+    playDeep(216, 0, 4.0);
+    playDeep(324, 0, 4.0);
+  } catch {}
+}
+
+function playPauseSound() {
+  try {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const ctx = new AudioContextClass();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(600, ctx.currentTime);
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.2);
+  } catch {}
 }
 
 export default function TimerSession({
@@ -61,6 +146,7 @@ export default function TimerSession({
       clearTimer();
       if (nextIndex >= totalSections) {
         setCompleted(true);
+        playEndSound();
         return;
       }
       setIndex(nextIndex);
@@ -87,10 +173,12 @@ export default function TimerSession({
     setIndex(0);
     setRemaining(sections[0]?.durationSec ?? 0);
     setCompleted(false);
+    playStartSound();
     document.documentElement.requestFullscreen?.().catch(() => {});
   }, [sections]);
 
   const togglePause = useCallback(() => {
+    playPauseSound();
     setPaused((p) => !p);
   }, []);
 
@@ -104,6 +192,9 @@ export default function TimerSession({
           window.setTimeout(() => goToSection(indexRef.current + 1), 0);
           return 0;
         }
+        if (prev <= 6) {
+          playBeatSound();
+        }
         return prev - 1;
       });
     }, 1000);
@@ -114,7 +205,7 @@ export default function TimerSession({
   useEffect(() => {
     if (!started || index === prevIndexRef.current) return;
     if (prevIndexRef.current >= 0 && index > 0) {
-      playSectionChime();
+      playTransitionSound();
     }
     prevIndexRef.current = index;
   }, [index, started]);
